@@ -19,13 +19,20 @@ public class jwtService {
     public static final String SECRET_KEY = "SsFydGdzfrEJod5SeBKvzB4+r7ompeJJLoHPw+jTBL4=";
 
     public String generateToken(UserDetails userDetails) {
-Map<String,String> claimsMap = new HashMap<>();
+
+        /*
+        Map<String,String> claimsMap = new HashMap<>();
  claimsMap.put("role","Admin");
+
+         */
+
+
         // You can add custom claims here if needed
         // claims.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
       return   Jwts.builder()
                 .setSubject(userDetails.getUsername())
-              .setClaims(claimsMap)
+
+
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*2))
                 .signWith(getKey(), SignatureAlgorithm.HS256)

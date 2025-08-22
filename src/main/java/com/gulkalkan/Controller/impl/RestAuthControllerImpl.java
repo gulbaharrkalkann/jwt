@@ -4,6 +4,7 @@ import com.gulkalkan.Controller.IRestAuthController;
 import com.gulkalkan.Dto.DtoUser;
 import com.gulkalkan.Service.IAuthService;
 import com.gulkalkan.jwt.AuthRequest;
+import com.gulkalkan.jwt.AuthResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,5 +21,11 @@ public class RestAuthControllerImpl implements IRestAuthController {
     @Override
     public DtoUser register(@Valid @RequestBody AuthRequest request) {
         return authService.register(request);
+    }
+
+    @PostMapping("/authenticate")
+    @Override
+    public AuthResponse authenticate(@Valid @RequestBody AuthRequest request) {
+        return authService.authenticate(request);
     }
 }
