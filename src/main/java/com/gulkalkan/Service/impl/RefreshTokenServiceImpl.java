@@ -50,7 +50,7 @@ public class RefreshTokenServiceImpl implements IRefreshTokenService {
 
        RefreshToken savedRefreshToken=refreshTokenRepository.save(createRefreshToken(refreshToken.getUser()));
 
-       return new AuthResponse(accessToken, savedRefreshToken.getRefreshToken());
+       return new AuthResponse(accessToken,savedRefreshToken.getRefreshToken());
 
 
        }

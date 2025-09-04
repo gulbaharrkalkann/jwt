@@ -35,6 +35,13 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPoint authEntryPoint;
 
+    public static final String[] SWAGGER_PATHS={
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+
+    };
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -43,6 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(AUTHENTICATE, REGISTER,REFRESH_TOKEN)
                                 .permitAll()
+                                .requestMatchers(SWAGGER_PATHS).permitAll()
                                 .anyRequest()
                                 .authenticated())
                .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
