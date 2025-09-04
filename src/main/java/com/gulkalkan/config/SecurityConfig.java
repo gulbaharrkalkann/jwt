@@ -1,6 +1,7 @@
 package com.gulkalkan.config;
 
 
+import com.gulkalkan.jwt.AuthEntryPoint;
 import com.gulkalkan.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
     public static final String AUTHENTICATE="/authenticate";
     public static final String REGISTER=("/register");
+    public static final String REFRESH_TOKEN="/refreshToken";
 
 
 
@@ -30,6 +32,8 @@ public class SecurityConfig {
     private AuthenticationProvider authenticationProvider;
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Autowired
+    private AuthEntryPoint authEntryPoint;
 
 
     @Bean
@@ -37,13 +41,18 @@ public class SecurityConfig {
 
        http.csrf().disable()
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers(AUTHENTICATE, REGISTER)
+                        request.requestMatchers(AUTHENTICATE, REGISTER,REFRESH_TOKEN)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
+               .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
                                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                .authenticationProvider(authenticationProvider)
-               .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+               .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
+
+       ;
+
 
        return http.build();
 

@@ -1,15 +1,14 @@
 package com.gulkalkan.jwt;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-
-    private String accessToken;
-    private String refreshToken;
+public class RefreshTokenRequest {
+    private  String refreshToken;
 }
